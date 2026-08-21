@@ -1,0 +1,23 @@
+Options -Indexes
+
+# Aktifkan rewrite engine
+RewriteEngine On
+
+# Jika request adalah file atau folder yang ada, jangan rewrite
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect semua request ke index.php (front controller)
+RewriteRule ^ index.php [QSA,L]
+
+# Optional: hilangkan ekstensi .php dari URL
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L,QSA]
+
+# Matikan tampilan file listing
+IndexIgnore *
+
+# Mengizinkan file tertentu
+<FilesMatch "\.(htaccess|htpasswd|ini|log|env)$">
+    Require all denied
+</FilesMatch>
